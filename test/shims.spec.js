@@ -14,13 +14,13 @@ describe('Shims', function(){
   it('should return an array of entries from Object.entries()', () => {
     const input = {"a":1, "b" : 2};
     const output = [["a", 1], ["b", 2]];
-    expect(input.entries()).to.eql(output);
+    expect(Object.entries(input)).to.eql(output);
   });
 
   it('should return an array of values from Object.values', () => {
     const input = {"a":1, "b" : 2};
     const output = [1, 2];
-    expect(input.values()).to.eql(output);
+    expect(Object.values(input)).to.eql(output);
   });
 
   it('should sequentially map the function to an array via Promise.seqAsync', () => {
@@ -40,7 +40,7 @@ describe('Shims', function(){
       const output = {"a":undefined, "b":undefined, "c":undefined};
       expect(input.toObjectKeys()).to.eql(output);
   });
-  
+
   it("should return an object with only the keys of the original, but overridden any keys in the subsequent sources", () => {
     const canon = {"a": 1, "b": 2};
     const source1 = {"a": "nope"};
