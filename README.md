@@ -17,6 +17,12 @@ or
 $ npm install --save rblb-utils
 ```
 
+## Usage
+
+```
+require("rblb-utils");
+```
+
 ## Included
 
 * [es6-promise-peek](https://github.com/perchten/es6-promise-peek)
