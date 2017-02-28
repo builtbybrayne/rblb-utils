@@ -58,7 +58,9 @@ defaults.pickAndAssign(configSourceA, configSourceB);
 
 ### `Array.seqAsync(fn)`
 
-Stands for "Sequential Async". It will run each async function strictly in turn, waiting for the previous function to complete before stepping through to the next. `fn` does not _need_ to be async though. If `fn` is not async then just use `Array.forEach(fn)`.
+Stands for "Sequential Async". It will run the async function on each value in the array in turn, waiting for the previous function to complete before stepping through to the next. If `fn` is not async then use `Array.forEach(fn)` or `Array.map(fn)` if you need the result.
+
+The result returned by each function's promise is passed as a parameter to the next, so this is also effectively a reducer.
 
 ```
 const fn = (x) => {
