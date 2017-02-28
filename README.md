@@ -38,7 +38,7 @@ $ npm install --save rblb-utils
 ```
 const source1 = {"a": "nope"};
 const source2 = {"c": "nope"}
-const source3 = {"a": "yes", "b": "also", "c": "nope"};const s2 = 
+const source3 = {"a": "yes", "b": "also", "c": "nope"};
 {"a": 1, "b": 2}.pickAndAssign(source1, source2, source3);
 // {"a": "yes", "b": "also"}
 ```
