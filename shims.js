@@ -5,14 +5,14 @@ const isEnumerable = Function.bind.call(Function.call, Object.prototype.property
 const concat = Function.bind.call(Function.call, Array.prototype.concat);
 const keys = Object.keys;
 
-if (!Object.values) {
+if (!Object.prototype.values) {
   Object.defineProperty(Object.prototype, 'values', {
     value: function() {
       return reduce(keys(this), (v, k) => concat(v, typeof k === 'string' && isEnumerable(this, k) ? [this[k]] : []), []);
     }
   });
 }
-if (!Object.entries) {
+if (!Object.prototype.entries) {
   Object.defineProperty(Object.prototype, 'entries', {
     value: function() {
       return reduce(keys(this), (e, k) => concat(e, typeof k === 'string' && isEnumerable(this, k) ? [[k, this[k]]] : []), []);
