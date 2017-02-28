@@ -40,20 +40,7 @@ describe('Shims', function(){
       const output = {"a":undefined, "b":undefined, "c":undefined};
       expect(input.toObjectKeys()).to.eql(output);
   });
-
-
-  it("should allow a transparent peek of a promise chain", () => {
-      const peek = sinon.stub();
-      const then = sinon.stub();
-      return Promise.resolve("a")
-        .peek(peek)
-        .then(then)
-        .then(() => {
-          expect(peek).to.have.been.calledWith("a");
-          expect(then).to.have.been.calledWith("a");
-        });
-  });
-
+  
   it("should return an object with only the keys of the original, but overridden any keys in the subsequent sources", () => {
     const canon = {"a": 1, "b": 2};
     const source1 = {"a": "nope"};

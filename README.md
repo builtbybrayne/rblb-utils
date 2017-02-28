@@ -17,7 +17,13 @@ or
 $ npm install --save rblb-utils
 ```
 
+## Included
+
+* [es6-promise-peek](https://github.com/perchten/es6-promise-peek)
+
+
 ## Shims
+
 
 ### `Object.entries()`
 
@@ -107,21 +113,6 @@ const configSourceB = {
 desiredConfig.toObjectKeys().pickAndAssign(configSourceA, configSourceB);
 // => {"a": 2, "b": "x", "c": undefined}
 ```
-
-## `Promise.peek(fn)`
-
-Easily peek into a promise chain
-
-```
-Promise.resolve("a")
-    .peek(console.log)
-    .then(console.log)
-    .then(console.log)
-// => "a"
-// => "a"
-// => undefined    
-```
-
 
 ## Testing
 

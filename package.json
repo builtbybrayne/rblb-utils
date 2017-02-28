@@ -30,5 +30,7 @@
     "sinon-chai": "^2.8.0",
     "watch": "^0.17.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "es6-promise-peek": "^1.0.0"
+  }
 }

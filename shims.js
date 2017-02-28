@@ -1,4 +1,6 @@
 'use strict';
+require("es6-promise-peek");
+
 
 const reduce = Function.bind.call(Function.call, Array.prototype.reduce);
 const isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
@@ -58,25 +60,6 @@ if (!Array.prototype.toObjectKeys) {
   });
 }
 
-
-// Create a tap on Promise objects
-if (!Promise.prototype.peek) {
-  Object.defineProperty(Promise.prototype, 'peek', {
-    value: function(fn) {
-      if (this === null) {
-        throw new TypeError('Promise.prototype.peek called on null or undefined');
-      }
-      if (typeof fn !== 'function') {
-        throw new TypeError(fn + ' is not a function');
-      }
-
-      return this.then(val => {
-        fn(val);
-        return val;
-      });
-    }
-  });
-}
 
 // Create new object with only the keys in the canon, but allowing subsequent sources to override those keys.
 if (!Object.prototype.pickAndAssign) {
