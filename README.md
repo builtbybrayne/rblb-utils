@@ -48,11 +48,22 @@ Useful if you have an object containing default config and want to extract the v
 ```
 const defaults = {
     "a": 1,
-    "b": undefined
+    "b": undefined,
+    "c": "xyz"
+}
+
+const configSourceA = {
+    "a": 2
+    ...
+}
+const configSourceB = {
+    "a": 3,
+    "b": "x"
+    ...
 }
 
 defaults.pickAndAssign(configSourceA, configSourceB);
-// => {"a":..., "b":...}
+// => {"a": 3, "b": "x", "c": "xyz"}
 ```
 
 
@@ -84,10 +95,17 @@ Handy in conjunction with `pickAndAssign` for setting up the initial object and 
 
 ```
 const desiredConfig = ["a", "b", "c"]
-const configSourceA = {...lots of keys...}
-const configSourceB = {...even more keys...}
+const configSourceA = {
+    "a": 1 
+    ...   
+}
+const configSourceB = {
+    "a": 2,
+    "b" "x"
+    ...
+}
 desiredConfig.toObjectKeys().pickAndAssign(configSourceA, configSourceB);
-// => {"a": ..., "b":..., "c":...}
+// => {"a": 2, "b": "x", "c": undefined}
 ```
 
 ## `Promise.peek(fn)`
