@@ -1,6 +1,6 @@
 {
   "name": "rblb-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Common utils and shims used by RBLB projects",
   "main": "index.js",
   "scripts": {
