@@ -20,7 +20,7 @@ $ npm install --save rblb-utils
 ## Usage
 
 ```
-require("rblb-utils");
+require("rblb-utils"); // No need toassign to an object as it's all shims
 ```
 
 ## Included
