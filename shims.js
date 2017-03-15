@@ -59,7 +59,7 @@ if (!Object.prototype.reduce) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.reduce(this, fn, initial);
+      return Object.reduce(this, callback, initial);
     }
   })
 }
@@ -73,7 +73,7 @@ if (!Object.prototype.map) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.map(this, fn);
+      return Object.map(this, callback);
     }
   })
 }
@@ -87,7 +87,7 @@ if (!Object.prototype.filter) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.filter(this, fn);
+      return Object.filter(this, callback);
     }
   })
 }

@@ -54,7 +54,7 @@ Object.values({"a": 1, "b": 2})
 
 Also available on prototype for chaining:
 
-``````
+```
 {"a": 1, "b": 2}.values() 
 // => [1, 2]
 ```
@@ -63,15 +63,15 @@ Also available on prototype for chaining:
 
 ```
 const source = {"a": 1, "b": 2};
-Object.reduce(source, (acc, k, v) => { 
+Object.reduce(source, (acc, k, v) => {
     acc[k] = v;
-    if (k%2 == 0) {
-        acc.evens = (acc.evens || 0 ) + 1;
+    if (v%2 == 0) {
+      acc.evens = (acc.evens || 0 ) + 1;
     } else {
-        acc.odds = (acc.odds || 0) + 1;
+      acc.odds = (acc.odds || 0) + 1;
     }
     return acc;
-}, {"c": 3})
+  }, {"c": 3})
 // {"a": 1, "b": 2, "c": 3, "odds": 1, "evens": 1} 
 ```
 
@@ -79,15 +79,15 @@ Initial value is optional:
 
 ```
 const source = {"a": 1, "b": 2};
-Object.reduce(source, (acc, k, v) => { 
+Object.reduce(source, (acc, k, v) => {
     acc[k] = v;
-    if (k%2 == 0) {
-        acc.evens = (acc.evens || 0 ) + 1;
+    if (v%2 == 0) {
+      acc.evens = (acc.evens || 0 ) + 1;
     } else {
-        acc.odds = (acc.odds || 0) + 1;
+      acc.odds = (acc.odds || 0) + 1;
     }
     return acc;
-})
+  })
 // {"a": 1, "b": 2, "odds": 1, "evens": 1} 
 ```
 
@@ -95,15 +95,15 @@ Also available on prototype for chaining:
 
 ```
 const source = {"a": 1, "b": 2};
-source.reeduce((acc, k, v) => { 
+source.reduce((acc, k, v) => {
     acc[k] = v;
-    if (k%2 == 0) {
-        acc.evens = (acc.evens || 0 ) + 1;
+    if (v%2 == 0) {
+      acc.evens = (acc.evens || 0 ) + 1;
     } else {
-        acc.odds = (acc.odds || 0) + 1;
+      acc.odds = (acc.odds || 0) + 1;
     }
     return acc;
-})
+  })
 // {"a": 1, "b": 2, "odds": 1, "evens": 1} 
 ```
 
