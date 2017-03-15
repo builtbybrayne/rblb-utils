@@ -28,33 +28,33 @@ if (!Object.filter) {
   Object.filter = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) && fn(k, O[k])) { e[k] = O[k]; } return e }, {});
 }
 
-if (!Object.prototype.values) {
-  Object.defineProperty(Object.prototype, 'values', {
+if (!Object.prototype.ovalues) {
+  Object.defineProperty(Object.prototype, 'ovalues', {
     value: function() {
       if (this === null) {
-        throw new TypeError('Object.prototype.values called on null or undefined');
+        throw new TypeError('Object.prototype.ovalues called on null or undefined');
       }
       return Object.values(this);
     }
   })
 }
 
-if (!Object.prototype.entries) {
-  Object.defineProperty(Object.prototype, 'entries', {
+if (!Object.prototype.oentries) {
+  Object.defineProperty(Object.prototype, 'oentries', {
     value: function() {
       if (this === null) {
-        throw new TypeError('Object.prototype.entries called on null or undefined');
+        throw new TypeError('Object.prototype.oentries called on null or undefined');
       }
       return Object.entries(this);
     }
   })
 }
 
-if (!Object.prototype.reduce) {
-  Object.defineProperty(Object.prototype, 'reduce', {
+if (!Object.prototype.oreduce) {
+  Object.defineProperty(Object.prototype, 'oreduce', {
     value: function(callback, initial={}) {
       if (this === null) {
-        throw new TypeError('Object.prototype.reduce called on null or undefined');
+        throw new TypeError('Object.prototype.oreduce called on null or undefined');
       }
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
@@ -64,11 +64,11 @@ if (!Object.prototype.reduce) {
   })
 }
 
-if (!Object.prototype.map) {
-  Object.defineProperty(Object.prototype, 'map', {
+if (!Object.prototype.omap) {
+  Object.defineProperty(Object.prototype, 'omap', {
     value: function(callback) {
       if (this === null) {
-        throw new TypeError('Object.prototype.map called on null or undefined');
+        throw new TypeError('Object.prototype.omap called on null or undefined');
       }
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
@@ -78,11 +78,11 @@ if (!Object.prototype.map) {
   })
 }
 
-if (!Object.prototype.filter) {
-  Object.defineProperty(Object.prototype, 'filter', {
+if (!Object.prototype.ofilter) {
+  Object.defineProperty(Object.prototype, 'ofilter', {
     value: function(callback) {
       if (this === null) {
-        throw new TypeError('Object.prototype.filter called on null or undefined');
+        throw new TypeError('Object.prototype.ofilter called on null or undefined');
       }
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');

@@ -22,7 +22,7 @@ describe('Shims', function(){
   it('should return an array of entries from Object.prototype.entries()', () => {
     const input = {"a":1, "b" : 2};
     const output = [["a", 1], ["b", 2]];
-    expect(input.entries()).to.eql(output);
+    expect(input.oentries()).to.eql(output);
   });
 
   it('should return an array of values from Object.values', () => {
@@ -34,7 +34,7 @@ describe('Shims', function(){
   it('should return an array of values from Object.prototype.values', () => {
     const input = {"a":1, "b" : 2};
     const output = [1, 2];
-    expect(input.values()).to.eql(output);
+    expect(input.ovalues()).to.eql(output);
   });
 
   it('should map correctly for Object.map(...)', () => {
@@ -46,7 +46,7 @@ describe('Shims', function(){
   it('should map correctly for Object.prototype.map(...)', () => {
     const input = {"a": 1, "b": 2};
     const output = {"a": 2, "b": 0};
-    expect(Object.map(input, (k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
+    expect(input.omap((k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
   });
 
   it('should map correctly for Object.filter(...)', () => {
@@ -58,7 +58,7 @@ describe('Shims', function(){
   it('should map correctly for Object.prototype.filter(...)', () => {
     const input = {"a": 1, "b": 2, "c": 3};
     const output = {"a": 1, "b": 2};
-    expect(input.filter((k, v) => k === "a" || v%2 ==0)).to.eql(output);
+    expect(input.ofilter((k, v) => k === "a" || v%2 ==0)).to.eql(output);
   });
 
   const reduceFn = (acc, k, v) => {
@@ -80,7 +80,7 @@ describe('Shims', function(){
   it('should reduce correctly for Object.prototype.reduce(...)', () => {
     const input = {"a":1, "b" : 2};
     const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
-    expect(input.reduce(reduceFn)).to.eql(output);
+    expect(input.oreduce(reduceFn)).to.eql(output);
   });
 
   it('should reduce correctly with an initial value for Object.reduce(...)', () => {
@@ -92,7 +92,7 @@ describe('Shims', function(){
   it('should reduce correctly with an initial value for Object.prototype.reduce(...)', () => {
     const input = {"a":1, "b" : 2};
     const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
-    expect(input.reduce(reduceFn, {"c": 3})).to.eql(output);
+    expect(input.oreduce(reduceFn, {"c": 3})).to.eql(output);
   });
 
 

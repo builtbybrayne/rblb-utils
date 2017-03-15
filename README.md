@@ -31,31 +31,31 @@ require("rblb-utils"); // No need toassign to an object as it's all shims
 ## Shims
 
 
-### `Object.entries()`
+### `Object.entries(Obj)`
 
 ```
 Object.entries({"a": 1, "b": 2}) 
 // => [["a", 1], ["b", 2]]
 ```
 
-Also available on prototype for chaining:
+### `Object.prototype.oentries()`
 
 ```
-{"a": 1, "b": 2}.entries() 
+{"a": 1, "b": 2}.oentries() 
 // => [["a", 1], ["b", 2]]
 ```
 
-### `Object.values()`
+### `Object.values(Obj)`
 
 ```
 Object.values({"a": 1, "b": 2})
 // => [1, 2]
 ```
 
-Also available on prototype for chaining:
+### `Object.prototype.ovalues()`
 
 ```
-{"a": 1, "b": 2}.values() 
+{"a": 1, "b": 2}.ovalues() 
 // => [1, 2]
 ```
 
@@ -91,11 +91,28 @@ Object.reduce(source, (acc, k, v) => {
 // {"a": 1, "b": 2, "odds": 1, "evens": 1} 
 ```
 
-Also available on prototype for chaining:
+### `Object.prototype.oreduce(fn)`
 
 ```
 const source = {"a": 1, "b": 2};
-source.reduce((acc, k, v) => {
+source.oreduce((acc, k, v) => {
+    acc[k] = v;
+    if (v%2 == 0) {
+      acc.evens = (acc.evens || 0 ) + 1;
+    } else {
+      acc.odds = (acc.odds || 0) + 1;
+    }
+    return acc;
+  }, {"c": 3)
+// {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3} 
+```
+
+
+Initial value is optional:
+
+```
+const source = {"a": 1, "b": 2};
+source.oreduce((acc, k, v) => {
     acc[k] = v;
     if (v%2 == 0) {
       acc.evens = (acc.evens || 0 ) + 1;
@@ -116,11 +133,11 @@ Object.map(source, (k, v) => (k==="a") ? v*2 : 0);
 // {"a": 2, "b": 0}
 ```
 
-Also available on prototype for chaining:
+### `Object.prototype.omap(fn)`
 
 ```
 const source = {"a": 1, "b": 2};
-source.map((k, v) => (k==="a") ? v*2 : 0);
+source.omap((k, v) => (k==="a") ? v*2 : 0);
 // {"a": 2, "b": 0}
 ```
 
@@ -132,11 +149,11 @@ Object.filter(source, (k, v) => k === "a" || v%2 ==0);
 // {"a": 1, "b": 2}
 ```
 
-Also available on prototype for chaining:
+### `Object.prototype.ofilter(fn)`
 
 ```
 const source = {"a": 1, "b": 2, "c": 3};
-source.filter((k, v) => k === "a" || v%2 ==0);
+source.ofilter((k, v) => k === "a" || v%2 ==0);
 // {"a": 1, "b": 2}
 ```
 
