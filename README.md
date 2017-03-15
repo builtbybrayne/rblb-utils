@@ -192,7 +192,7 @@ const fn = (x) => {
 // => "c"
 ```
 
-## `Array.toObjectKeys()`
+### `Array.toObjectKeys()`
 
 ```
 ["a", "b", "c"].toObjectKeys()
