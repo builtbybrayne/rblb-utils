@@ -7,15 +7,26 @@ const isEnumerable = Function.bind.call(Function.call, Object.prototype.property
 const concat = Function.bind.call(Function.call, Array.prototype.concat);
 const keys = Object.keys;
 
+function ok(O, k) {
+  return typeof k === 'string' && isEnumerable(O, k);
+}
 
 
 if (!Object.values) {
-  Object.values = (O) => reduce(keys(O), (v, k) => concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : []), []);
+  Object.values = (O) => reduce(keys(O), (v, k) => concat(v, ok(O,k) ? [O[k]] : []), []);
 }
 if (!Object.entries) {
-  Object.entries = (O) => reduce(keys(O), (e, k) => concat(e, typeof k === 'string' && isEnumerable(O, k) ? [[k, O[k]]] : []), []);
+  Object.entries = (O) => reduce(keys(O), (e, k) => concat(e, ok(O, k) ? [[k, O[k]]] : []), []);
 }
-
+if (!Object.reduce) {
+  Object.reduce = (O, fn, initial={}) => reduce(keys(O), (e, k) => ok(O, k) ? fn(e, k, O[k]) : e, initial);
+}
+if (!Object.map) {
+  Object.map = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) ) { e[k] = fn(k, O[k]) } return e; }, {});
+}
+if (!Object.filter) {
+  Object.filter = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) && fn(k, O[k])) { e[k] = O[k]; } return e }, {});
+}
 
 // Chain promises. Sequentially map the function to the array. `fn` must always return a promise
 if (!Array.prototype.seqAsync) {

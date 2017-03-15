@@ -38,12 +38,46 @@ require("rblb-utils");
 // => [["a", 1], ["b", 2]]
 ```
 
-### `Object.values()
+### `Object.values()`
 
 ```
 {"a": 1, "b": 2}.values() 
 // => [1, 2]
 ```
+
+### `Object.reduce(Obj, fn)`
+
+```
+const source = {"a": 1, "b": 2};
+Object.reduce(source, (acc, k, v) => { 
+    acc[k] = v;
+    if (k%2 == 0) {
+        acc.evens = (acc.evens || 0 ) + 1;
+    } else {
+        acc.odds = (acc.odds || 0) + 1;
+    }
+    return acc;
+}, {"c": 3})
+// {"a": 1, "b": 2, "c": 3, "odds": 1, "evens": 1} 
+```
+
+### `Object.map(Obj, fn)`
+
+```
+const source = {"a": 1, "b": 2};
+Object.map(source, (k, v) => (k==="a") ? v*2 : 0);
+// {"a": 2, "b": 0}
+```
+
+### `Object.filter(Obj, fn)`
+
+```
+const source = {"a": 1, "b": 2, "c": 3};
+Object.filter(source, (k, v) => k === "a" || v%2 ==0);
+// {"a": 1, "b": 2}
+
+```
+
 
 ### `Object.pickAndAssign(...sources)`
 
