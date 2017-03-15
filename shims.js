@@ -28,6 +28,72 @@ if (!Object.filter) {
   Object.filter = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) && fn(k, O[k])) { e[k] = O[k]; } return e }, {});
 }
 
+if (!Object.prototype.values) {
+  Object.defineProperty(Object.prototype, 'values', {
+    value: function() {
+      if (this === null) {
+        throw new TypeError('Object.prototype.values called on null or undefined');
+      }
+      return Object.values(this);
+    }
+  })
+}
+
+if (!Object.prototype.entries) {
+  Object.defineProperty(Object.prototype, 'entries', {
+    value: function() {
+      if (this === null) {
+        throw new TypeError('Object.prototype.entries called on null or undefined');
+      }
+      return Object.entries(this);
+    }
+  })
+}
+
+if (!Object.prototype.reduce) {
+  Object.defineProperty(Object.prototype, 'reduce', {
+    value: function(callback, initial={}) {
+      if (this === null) {
+        throw new TypeError('Object.prototype.reduce called on null or undefined');
+      }
+      if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+      }
+      return Object.reduce(this, fn, initial);
+    }
+  })
+}
+
+if (!Object.prototype.map) {
+  Object.defineProperty(Object.prototype, 'map', {
+    value: function(callback) {
+      if (this === null) {
+        throw new TypeError('Object.prototype.map called on null or undefined');
+      }
+      if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+      }
+      return Object.map(this, fn);
+    }
+  })
+}
+
+if (!Object.prototype.filter) {
+  Object.defineProperty(Object.prototype, 'filter', {
+    value: function(callback) {
+      if (this === null) {
+        throw new TypeError('Object.prototype.filter called on null or undefined');
+      }
+      if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+      }
+      return Object.filter(this, fn);
+    }
+  })
+}
+
+
+
 // Chain promises. Sequentially map the function to the array. `fn` must always return a promise
 if (!Array.prototype.seqAsync) {
   Object.defineProperty(Array.prototype, 'seqAsync', {

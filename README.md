@@ -34,6 +34,13 @@ require("rblb-utils");
 ### `Object.entries()`
 
 ```
+Object.entries({"a": 1, "b": 2}) 
+// => [["a", 1], ["b", 2]]
+```
+
+Also available on prototype for chaining:
+
+```
 {"a": 1, "b": 2}.entries() 
 // => [["a", 1], ["b", 2]]
 ```
@@ -41,6 +48,13 @@ require("rblb-utils");
 ### `Object.values()`
 
 ```
+Object.values({"a": 1, "b": 2})
+// => [1, 2]
+```
+
+Also available on prototype for chaining:
+
+``````
 {"a": 1, "b": 2}.values() 
 // => [1, 2]
 ```
@@ -62,6 +76,7 @@ Object.reduce(source, (acc, k, v) => {
 ```
 
 Initial value is optional:
+
 ```
 const source = {"a": 1, "b": 2};
 Object.reduce(source, (acc, k, v) => { 
@@ -76,11 +91,36 @@ Object.reduce(source, (acc, k, v) => {
 // {"a": 1, "b": 2, "odds": 1, "evens": 1} 
 ```
 
+Also available on prototype for chaining:
+
+```
+const source = {"a": 1, "b": 2};
+source.reeduce((acc, k, v) => { 
+    acc[k] = v;
+    if (k%2 == 0) {
+        acc.evens = (acc.evens || 0 ) + 1;
+    } else {
+        acc.odds = (acc.odds || 0) + 1;
+    }
+    return acc;
+})
+// {"a": 1, "b": 2, "odds": 1, "evens": 1} 
+```
+
+
 ### `Object.map(Obj, fn)`
 
 ```
 const source = {"a": 1, "b": 2};
 Object.map(source, (k, v) => (k==="a") ? v*2 : 0);
+// {"a": 2, "b": 0}
+```
+
+Also available on prototype for chaining:
+
+```
+const source = {"a": 1, "b": 2};
+source.map((k, v) => (k==="a") ? v*2 : 0);
 // {"a": 2, "b": 0}
 ```
 
@@ -90,7 +130,14 @@ Object.map(source, (k, v) => (k==="a") ? v*2 : 0);
 const source = {"a": 1, "b": 2, "c": 3};
 Object.filter(source, (k, v) => k === "a" || v%2 ==0);
 // {"a": 1, "b": 2}
+```
 
+Also available on prototype for chaining:
+
+```
+const source = {"a": 1, "b": 2, "c": 3};
+source.filter((k, v) => k === "a" || v%2 ==0);
+// {"a": 1, "b": 2}
 ```
 
 
