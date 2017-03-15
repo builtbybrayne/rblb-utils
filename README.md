@@ -59,11 +59,11 @@ Object.values({"a": 1, "b": 2})
 // => [1, 2]
 ```
 
-### `Object.reduce(Obj, fn)`
+### `Object.oreduce(Obj, fn)`
 
 ```
 const source = {"a": 1, "b": 2};
-Object.reduce(source, (acc, k, v) => {
+Object.oreduce(source, (acc, k, v) => {
     acc[k] = v;
     if (v%2 == 0) {
       acc.evens = (acc.evens || 0 ) + 1;
@@ -79,7 +79,7 @@ Initial value is optional:
 
 ```
 const source = {"a": 1, "b": 2};
-Object.reduce(source, (acc, k, v) => {
+Object.oreduce(source, (acc, k, v) => {
     acc[k] = v;
     if (v%2 == 0) {
       acc.evens = (acc.evens || 0 ) + 1;
@@ -125,11 +125,11 @@ source.oreduce((acc, k, v) => {
 ```
 
 
-### `Object.map(Obj, fn)`
+### `Object.omap(Obj, fn)`
 
 ```
 const source = {"a": 1, "b": 2};
-Object.map(source, (k, v) => (k==="a") ? v*2 : 0);
+Object.omap(source, (k, v) => (k==="a") ? v*2 : 0);
 // {"a": 2, "b": 0}
 ```
 
@@ -141,11 +141,11 @@ source.omap((k, v) => (k==="a") ? v*2 : 0);
 // {"a": 2, "b": 0}
 ```
 
-### `Object.filter(Obj, fn)`
+### `Object.ofilter(Obj, fn)`
 
 ```
 const source = {"a": 1, "b": 2, "c": 3};
-Object.filter(source, (k, v) => k === "a" || v%2 ==0);
+Object.ofilter(source, (k, v) => k === "a" || v%2 ==0);
 // {"a": 1, "b": 2}
 ```
 

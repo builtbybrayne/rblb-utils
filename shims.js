@@ -2,6 +2,7 @@
 require("es6-promise-peek");
 
 
+const forEach = Function.bind.call(Function.call, Array.prototype.forEach);
 const reduce = Function.bind.call(Function.call, Array.prototype.reduce);
 const isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
 const concat = Function.bind.call(Function.call, Array.prototype.concat);
@@ -18,14 +19,32 @@ if (!Object.values) {
 if (!Object.entries) {
   Object.entries = (O) => reduce(keys(O), (e, k) => concat(e, ok(O, k) ? [[k, O[k]]] : []), []);
 }
-if (!Object.reduce) {
-  Object.reduce = (O, fn, initial={}) => reduce(keys(O), (e, k) => ok(O, k) ? fn(e, k, O[k]) : e, initial);
+if (!Object.oreduce) {
+  Object.oreduce = (O, fn, initial={}) => reduce(keys(O), (e, k) => ok(O, k) ? fn(e, k, O[k]) : e, initial);
 }
-if (!Object.map) {
-  Object.map = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) ) { e[k] = fn(k, O[k]) } return e; }, {});
+if (!Object.omap) {
+  Object.omap = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) ) { e[k] = fn(k, O[k]) } return e; }, {});
 }
-if (!Object.filter) {
-  Object.filter = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) && fn(k, O[k])) { e[k] = O[k]; } return e }, {});
+if (!Object.ofilter) {
+  Object.ofilter = (O, fn) => reduce(keys(O), (e, k) => { if (ok(O, k) && fn(k, O[k])) { e[k] = O[k]; } return e }, {});
+}
+if (!Object.oforEach) {
+  Object.oforEach = (O, fn) => forEach(keys(O), (k) => { if (ok(O, k)) { fn(k, O[k]); } });
+}
+
+if (!Object.prototype.oforEach) {
+  Object.defineProperty(Object.prototype, 'oforEach', {
+    value: function(callback) {
+      console.log(...arguments);
+      if (this === null) {
+        throw new TypeError('Object.prototype.oforEach called on null or undefined');
+      }
+      if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+      }
+      return Object.oforEach(this, callback);
+    }
+  })
 }
 
 if (!Object.prototype.ovalues) {
@@ -59,7 +78,7 @@ if (!Object.prototype.oreduce) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.reduce(this, callback, initial);
+      return Object.oreduce(this, callback, initial);
     }
   })
 }
@@ -73,7 +92,7 @@ if (!Object.prototype.omap) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.map(this, callback);
+      return Object.omap(this, callback);
     }
   })
 }
@@ -87,7 +106,7 @@ if (!Object.prototype.ofilter) {
       if (typeof callback !== 'function') {
         throw new TypeError(callback + ' is not a function');
       }
-      return Object.filter(this, callback);
+      return Object.ofilter(this, callback);
     }
   })
 }

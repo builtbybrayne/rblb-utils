@@ -37,10 +37,24 @@ describe('Shims', function(){
     expect(input.ovalues()).to.eql(output);
   });
 
+  it('should correctly apply Object.oforEach', () => {
+    const input = {"a":1, "b" : 2};
+    const output = {};
+    Object.oforEach(input, (k, v) => output[k] = v);
+    expect(output).to.eql(input);
+  });
+
+  it('should correctly apply Object.prototype.oforEach', () => {
+    const input = {"a":1, "b" : 2};
+    const output = {};
+    input.oforEach((k, v) => output[k] = v);
+    expect(input).to.eql(output);
+  });
+
   it('should map correctly for Object.map(...)', () => {
     const input = {"a":1, "b" : 2};
     const output = {"a":2, "b": 0};
-    expect(Object.map(input, (k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
+    expect(Object.omap(input, (k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
   });
 
   it('should map correctly for Object.prototype.map(...)', () => {
@@ -52,7 +66,7 @@ describe('Shims', function(){
   it('should map correctly for Object.filter(...)', () => {
     const input = {"a": 1, "b": 2, "c": 3};
     const output = {"a": 1, "b": 2};
-    expect(Object.filter(input, (k, v) => k === "a" || v%2 ==0)).to.eql(output);
+    expect(Object.ofilter(input, (k, v) => k === "a" || v%2 ==0)).to.eql(output);
   });
 
   it('should map correctly for Object.prototype.filter(...)', () => {
@@ -74,7 +88,7 @@ describe('Shims', function(){
   it('should reduce correctly for Object.reduce(...)', () => {
     const input = {"a":1, "b" : 2};
     const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
-    expect(Object.reduce(input, reduceFn)).to.eql(output);
+    expect(Object.oreduce(input, reduceFn)).to.eql(output);
   });
 
   it('should reduce correctly for Object.prototype.reduce(...)', () => {
@@ -86,7 +100,7 @@ describe('Shims', function(){
   it('should reduce correctly with an initial value for Object.reduce(...)', () => {
     const input = {"a":1, "b" : 2};
     const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
-    expect(Object.reduce(input, reduceFn, {"c": 3})).to.eql(output);
+    expect(Object.oreduce(input, reduceFn, {"c": 3})).to.eql(output);
   });
 
   it('should reduce correctly with an initial value for Object.prototype.reduce(...)', () => {
