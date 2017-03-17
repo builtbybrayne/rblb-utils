@@ -6,109 +6,120 @@ require("sinon-as-promised");
 chai.use(require('chai-as-promised'));
 chai.use(require("sinon-chai"));
 
-
 require("../shims");
 
+const reduceFn = (acc, k, v) => {
+  acc[k] = v;
+  if (v%2 == 0) {
+    acc.evens = (acc.evens || 0 ) + 1;
+  } else {
+    acc.odds = (acc.odds || 0) + 1;
+  }
+  return acc;
+};
 
 
 describe('Shims', function(){
 
-  it('should return an array of entries from Object.entries()', () => {
-    const input = {"a":1, "b" : 2};
-    const output = [["a", 1], ["b", 2]];
-    expect(Object.entries(input)).to.eql(output);
+
+  describe('Object.entries()', () => {
+    it('should return an array of entries from Object.entries()', () => {
+      const input = {"a":1, "b" : 2};
+      const output = [["a", 1], ["b", 2]];
+      expect(Object.entries(input)).to.eql(output);
+    });
+
+    it('should return an array of entries from Object.prototype.entries()', () => {
+      const input = {"a":1, "b" : 2};
+      const output = [["a", 1], ["b", 2]];
+      expect(input.oentries()).to.eql(output);
+    });
   });
 
-  it('should return an array of entries from Object.prototype.entries()', () => {
-    const input = {"a":1, "b" : 2};
-    const output = [["a", 1], ["b", 2]];
-    expect(input.oentries()).to.eql(output);
+  describe('Object.values()', () => {
+    it('should return an array of values from Object.values', () => {
+      const input = {"a":1, "b" : 2};
+      const output = [1, 2];
+      expect(Object.values(input)).to.eql(output);
+    });
+
+    it('should return an array of values from Object.prototype.values', () => {
+      const input = {"a":1, "b" : 2};
+      const output = [1, 2];
+      expect(input.ovalues()).to.eql(output);
+    });
   });
 
-  it('should return an array of values from Object.values', () => {
-    const input = {"a":1, "b" : 2};
-    const output = [1, 2];
-    expect(Object.values(input)).to.eql(output);
+  describe('Object.oforEach()', () => {
+    it('should correctly apply Object.oforEach', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {};
+      Object.oforEach(input, (k, v) => output[k] = v);
+      expect(output).to.eql(input);
+    });
+
+    it('should correctly apply Object.prototype.oforEach', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {};
+      input.oforEach((k, v) => output[k] = v);
+      expect(input).to.eql(output);
+    });
   });
 
-  it('should return an array of values from Object.prototype.values', () => {
-    const input = {"a":1, "b" : 2};
-    const output = [1, 2];
-    expect(input.ovalues()).to.eql(output);
+
+  describe('Object.omap()', () => {
+    it('should map correctly for Object.omap(...)', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {"a":2, "b": 0};
+      expect(Object.omap(input, (k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
+    });
+
+    it('should map correctly for Object.prototype.omap(...)', () => {
+      const input = {"a": 1, "b": 2};
+      const output = {"a": 2, "b": 0};
+      expect(input.omap((k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
+    });
   });
 
-  it('should correctly apply Object.oforEach', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {};
-    Object.oforEach(input, (k, v) => output[k] = v);
-    expect(output).to.eql(input);
+  describe('Object.ofilter()', () => {
+    it('should map correctly for Object.ofilter(...)', () => {
+      const input = {"a": 1, "b": 2, "c": 3};
+      const output = {"a": 1, "b": 2};
+      expect(Object.ofilter(input, (k, v) => k === "a" || v%2 ==0)).to.eql(output);
+    });
+
+    it('should map correctly for Object.prototype.ofilter(...)', () => {
+      const input = {"a": 1, "b": 2, "c": 3};
+      const output = {"a": 1, "b": 2};
+      expect(input.ofilter((k, v) => k === "a" || v%2 ==0)).to.eql(output);
+    });
   });
 
-  it('should correctly apply Object.prototype.oforEach', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {};
-    input.oforEach((k, v) => output[k] = v);
-    expect(input).to.eql(output);
+  describe('Object.oreduce', () => {
+    it('should reduce correctly for Object.oreduce(...)', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
+      expect(Object.oreduce(input, reduceFn)).to.eql(output);
+    });
+
+    it('should reduce correctly for Object.prototype.oreduce(...)', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
+      expect(input.oreduce(reduceFn)).to.eql(output);
+    });
+
+    it('should reduce correctly with an initial value for Object.oreduce(...)', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
+      expect(Object.oreduce(input, reduceFn, {"c": 3})).to.eql(output);
+    });
+
+    it('should reduce correctly with an initial value for Object.prototype.oreduce(...)', () => {
+      const input = {"a":1, "b" : 2};
+      const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
+      expect(input.oreduce(reduceFn, {"c": 3})).to.eql(output);
+    });
   });
-
-  it('should map correctly for Object.map(...)', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {"a":2, "b": 0};
-    expect(Object.omap(input, (k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
-  });
-
-  it('should map correctly for Object.prototype.map(...)', () => {
-    const input = {"a": 1, "b": 2};
-    const output = {"a": 2, "b": 0};
-    expect(input.omap((k, v) => (k==="a") ? v*2 : 0)).to.eql(output);
-  });
-
-  it('should map correctly for Object.filter(...)', () => {
-    const input = {"a": 1, "b": 2, "c": 3};
-    const output = {"a": 1, "b": 2};
-    expect(Object.ofilter(input, (k, v) => k === "a" || v%2 ==0)).to.eql(output);
-  });
-
-  it('should map correctly for Object.prototype.filter(...)', () => {
-    const input = {"a": 1, "b": 2, "c": 3};
-    const output = {"a": 1, "b": 2};
-    expect(input.ofilter((k, v) => k === "a" || v%2 ==0)).to.eql(output);
-  });
-
-  const reduceFn = (acc, k, v) => {
-    acc[k] = v;
-    if (v%2 == 0) {
-      acc.evens = (acc.evens || 0 ) + 1;
-    } else {
-      acc.odds = (acc.odds || 0) + 1;
-    }
-    return acc;
-  };
-
-  it('should reduce correctly for Object.reduce(...)', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
-    expect(Object.oreduce(input, reduceFn)).to.eql(output);
-  });
-
-  it('should reduce correctly for Object.prototype.reduce(...)', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {"a": 1, "b": 2, "odds": 1, "evens": 1};
-    expect(input.oreduce(reduceFn)).to.eql(output);
-  });
-
-  it('should reduce correctly with an initial value for Object.reduce(...)', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
-    expect(Object.oreduce(input, reduceFn, {"c": 3})).to.eql(output);
-  });
-
-  it('should reduce correctly with an initial value for Object.prototype.reduce(...)', () => {
-    const input = {"a":1, "b" : 2};
-    const output = {"a": 1, "b": 2, "odds": 1, "evens": 1, "c": 3};
-    expect(input.oreduce(reduceFn, {"c": 3})).to.eql(output);
-  });
-
 
 
   it('should sequentially map the function to an array via Promise.seqAsync', () => {
