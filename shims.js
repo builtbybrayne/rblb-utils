@@ -35,7 +35,6 @@ if (!Object.oforEach) {
 if (!Object.prototype.oforEach) {
   Object.defineProperty(Object.prototype, 'oforEach', {
     value: function(callback) {
-      console.log(...arguments);
       if (this === null) {
         throw new TypeError('Object.prototype.oforEach called on null or undefined');
       }
