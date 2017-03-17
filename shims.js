@@ -8,10 +8,15 @@ const isEnumerable = Function.bind.call(Function.call, Object.prototype.property
 const concat = Function.bind.call(Function.call, Array.prototype.concat);
 const keys = Object.keys;
 
+
+if (!Function.isFunction) {
+  Function.isFunction = fn => typeof fn === 'function';
+}
+
+
 function ok(O, k) {
   return typeof k === 'string' && isEnumerable(O, k);
 }
-
 
 if (!Object.values) {
   Object.values = (O) => reduce(keys(O), (v, k) => concat(v, ok(O,k) ? [O[k]] : []), []);
@@ -173,3 +178,4 @@ if (!Object.prototype.pickAndAssign) {
     }
   });
 }
+

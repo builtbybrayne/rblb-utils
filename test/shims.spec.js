@@ -21,6 +21,23 @@ const reduceFn = (acc, k, v) => {
 
 describe('Shims', function(){
 
+  describe('Function.isFunction', () => {
+    it('should return true for functions', () => {
+      expect(Function.isFunction(()=>{})).to.be.true;
+    });
+    it('should return false for non-functions', () => {
+      expect(Function.isFunction(null)).to.be.false;
+      expect(Function.isFunction(undefined)).to.be.false;
+      expect(Function.isFunction(0)).to.be.false;
+      expect(Function.isFunction(1)).to.be.false;
+      expect(Function.isFunction('')).to.be.false;
+      expect(Function.isFunction({})).to.be.false;
+      expect(Function.isFunction(true)).to.be.false;
+      expect(Function.isFunction(false)).to.be.false;
+      expect(Function.isFunction(NaN)).to.be.false;
+      expect(Function.isFunction([])).to.be.false;
+    })
+  });
 
   describe('Object.entries()', () => {
     it('should return an array of entries from Object.entries()', () => {
